@@ -1,0 +1,155 @@
+" 突出显示当前列
+set cursorcolumn
+" 突出显示当前行
+set cursorline
+
+" 高亮search命中的文本
+set hlsearch
+" 打开增量搜索模式,随着键入即时搜索
+set incsearch
+" 搜索时忽略大小写
+set ignorecase
+" 有一个或以上大写字母时仍大小写敏感
+set smartcase
+
+" 相对行号: 行号变成相对，可以用 nj/nk 进行跳转
+set relativenumber number
+au FocusLost * :set norelativenumber number
+au FocusGained * :set relativenumber
+" 插入模式下用绝对行号, 普通模式下用相对
+autocmd InsertEnter * :set norelativenumber number
+autocmd InsertLeave * :set relativenumber
+function! NumberToggle()
+    if(&relativenumber == 1)
+        set norelativenumber number
+    else
+        set relativenumber
+    endif
+endfunc
+nnoremap <leader>l :call NumberToggle()<cr>
+
+" F1 废弃这个键,防止调出系统帮助
+" I can type :help on my own, thanks.  Protect your fat fingers from the evils of <F1>
+noremap <F1> <Esc>"
+
+" Go to home and end using capitalized directions
+noremap H ^
+noremap L $
+
+" Map ; to : and save a million keystrokes 用于快速进入命令行
+nnoremap ; :
+
+" remap U to <C-r> for easier redo
+nnoremap U <C-r>
+
+" 搜索相关
+" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+" Remove this map by @insane
+" map <space> /
+" 进入搜索Use sane regexes"
+nnoremap / /\v
+vnoremap / /\v
+
+" quick search
+nnoremap <space> :let @/="\\\<<c-r><c-w>\\\>\\C"\|set hlsearch<CR>
+" replace
+nnoremap <leader>r :let @/="\\\<<c-r><c-w>\\\>\\C"\|set hlsearch<CR>:%s/<c-r>//<c-r><c-w>
+
+" Custom setting by insane
+highlight Underlined term=underline cterm=underline gui=underline
+
+map <leader>n <plug>NERDTreeTabsToggle<CR>
+
+" ctrlsf {{{
+"    nmap \ <Plug>CtrlSFCwordPath<CR>
+    let g:ctrlsf_default_filetype = ""
+    function! GetCtrlSFDefaultFileType()
+        if exists('g:ctrlsf_default_filetype') && !empty(g:ctrlsf_default_filetype)
+            return "-filetype \"" . g:ctrlsf_default_filetype . "\""
+        else
+            return ""
+        endif
+    endfunction
+    nnoremap \ :CtrlSF -S -E "-w" "<c-r><c-w>" <c-r>=GetCtrlSFDefaultFileType()<cr><cr>
+    nnoremap <leader>f :CtrlSF 
+    nnoremap <leader>q :CtrlSFToggle<CR>
+    nnoremap <leader>\ :CtrlSF -E "-w" "<c-r><c-w>" <c-r>=getcwd()<cr> -S <c-r>=GetCtrlSFDefaultFileType()<cr>
+    " let g:ctrlsf_position = 'below'
+    " let g:ctrlsf_winsize = '30%'
+    let g:ctrlsf_context = '-B 1 -A 1'
+    let g:ctrlsf_auto_close = 0
+    let g:ctrlsf_confirm_save = 0
+    let g:ctrlsf_position = 'bottom'
+    " let g:ctrlsf_populate_qflist = 1
+    " Note: cannot use <CR> or <C-m> for open
+    " Use : <sapce> or <tab>
+    let g:ctrlsf_mapping = {
+        \ "open"  : ["<cr>", "o"],
+        \ "openb" : "O",
+        \ "split" : "<c-s>",
+        \ "vsplit"  : "<c-v>",
+        \ "tab"   : "t",
+        \ "tabb"  : "T",
+        \ "prevw" : "p",
+        \ "quit"  : "q",
+        \ "next"  : "<C-J>",
+        \ "prev"  : "<C-K>",
+        \ "pquit" : "q",
+        \ }
+" }}}
+
+" nerdtree nerdtreetabs {{{
+    " enable line numbers
+    let NERDTreeShowLineNumbers=1
+    " make sure relative line numbers are used
+    autocmd FileType nerdtree setlocal relativenumber
+
+    " map <leader>n :NERDTreeToggle<CR>
+    let NERDTreeHighlightCursorline=1
+    let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$', '\.meta$' ]
+    "close vim if the only window left open is a NERDTree
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+    " s/v 分屏打开文件
+    let g:NERDTreeMapOpenSplit = 's'
+    let g:NERDTreeMapOpenVSplit = 'v'
+
+    " nerdtreetabs
+    " map <Leader>n <plug>NERDTreeTabsToggle<CR>
+    " 关闭同步
+    let g:nerdtree_tabs_synchronize_view=0
+    let g:nerdtree_tabs_synchronize_focus=0
+    " 是否自动开启nerdtree
+    " thank to @ListenerRi, see https://github.com/wklken/k-vim/issues/165
+    let g:nerdtree_tabs_open_on_console_startup=0
+    let g:nerdtree_tabs_open_on_gui_startup=0
+" }}}
+
+" ctrlspace {{{
+    let g:airline_exclude_preview = 1
+    hi CtrlSpaceSelected guifg=#586e75 guibg=#eee8d5 guisp=#839496 gui=reverse,bold ctermfg=10 ctermbg=7 cterm=reverse,bold
+    hi CtrlSpaceNormal   guifg=#839496 guibg=#021B25 guisp=#839496 gui=NONE ctermfg=12 ctermbg=0 cterm=NONE
+    hi CtrlSpaceSearch   guifg=#cb4b16 guibg=NONE gui=bold ctermfg=9 ctermbg=NONE term=bold cterm=bold
+    hi CtrlSpaceStatus   guifg=#839496 guibg=#002b36 gui=reverse term=reverse cterm=reverse ctermfg=12 ctermbg=8
+    nnoremap <c-space> :CtrlSpace<CR>
+" }}}
+
+" HiCursorWords {{{
+    let g:HiCursorWords_delay = 200
+    let g:HiCursorWords_hiGroupRegexp = ''
+    let g:HiCursorWords_debugEchoHiName = 0
+" }}}
+
+  let g:bufferline_echo = 0
+nnoremap <Leader>1 :1b<CR>
+nnoremap <Leader>2 :2b<CR>
+nnoremap <Leader>3 :3b<CR>
+nnoremap <Leader>4 :4b<CR>
+nnoremap <Leader>5 :5b<CR>
+nnoremap <Leader>6 :6b<CR>
+nnoremap <Leader>7 :7b<CR>
+nnoremap <Leader>8 :8b<CR>
+nnoremap <Leader>9 :9b<CR>
+nnoremap <Leader>0 :10b<CR>
+
+set nowrapscan
+

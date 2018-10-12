@@ -1,0 +1,14 @@
+
+    " Lua {
+        if count(g:spf13_bundle_groups, 'lua')
+            Bundle 'xolox/vim-misc'
+            " Bundle 'xolox/vim-lua-inspect'
+            Bundle 'xolox/vim-lua-ftplugin'
+        endif
+    " }
+
+    Bundle 'vim-ctrlspace/vim-ctrlspace'
+
+    Bundle 'veintin/ctrlsf.vim'
+    Bundle 'veintin/HiCursorWords'
+
