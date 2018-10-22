@@ -153,3 +153,39 @@ nnoremap <Leader>0 :10b<CR>
 
 set nowrapscan
 
+let g:ctrlp_working_path_mode = 'a'
+
+if has("gui_running")
+    "set guifont=Monaco:h12
+    if has("gui_gtk2")   "GTK2
+        set guifont=Monaco\ 12,Monospace\ 12
+    else
+        set guifont=Consolas:h12
+    endif
+    set guioptions-=T
+    set guioptions+=e
+    set guioptions-=r
+    set guioptions-=L
+    set guitablabel=%M\ %t
+    set showtabline=1
+    set linespace=2
+    set noimd
+    set t_Co=256
+    " Maximize gvim window.
+    au GUIEnter * simalt ~x
+
+    function! OnStartUp()
+        if empty(expand('%:p'))
+            cd E:\
+            NERDTree
+        endif
+    endfunc
+    autocmd VimEnter * call OnStartUp()
+
+endif
+
+" kj 替换 Esc
+inoremap kj <Esc>
+
+nnoremap gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
