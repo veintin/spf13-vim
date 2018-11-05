@@ -1,9 +1,10 @@
 
     " Lua {
         if count(g:spf13_bundle_groups, 'lua')
-            Bundle 'xolox/vim-misc'
+            " Bundle 'xolox/vim-misc'
             " Bundle 'xolox/vim-lua-inspect'
-            Bundle 'xolox/vim-lua-ftplugin'
+			" will change the 'iskeyword' config, so unplugin it and wait for better solution
+            " Bundle 'xolox/vim-lua-ftplugin'
         endif
     " }
 

@@ -71,7 +71,7 @@ map <leader>n <plug>NERDTreeTabsToggle<CR>
         endif
     endfunction
     nnoremap \ :CtrlSF -S -E "-w" "<c-r><c-w>" <c-r>=GetCtrlSFDefaultFileType()<cr><cr>
-    nnoremap <leader>f :CtrlSF 
+    nnoremap <leader>ff :CtrlSF 
     nnoremap <leader>q :CtrlSFToggle<CR>
     nnoremap <leader>\ :CtrlSF -E "-w" "<c-r><c-w>" <c-r>=getcwd()<cr> -S <c-r>=GetCtrlSFDefaultFileType()<cr>
     " let g:ctrlsf_position = 'below'
@@ -189,3 +189,8 @@ inoremap kj <Esc>
 
 nnoremap gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
+" unset .- in word
+" verbose set iskeyword to find the evil
+" maybe in .vimviews, will keep something
+set isk-=.
+set isk-=-
