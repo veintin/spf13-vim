@@ -6,4 +6,6 @@
 
     let g:spf13_no_autochdir = 1
 
+    let g:spf13_keep_trailing_whitespace = 1
+
 
