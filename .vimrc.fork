@@ -47,8 +47,8 @@ nnoremap U <C-r>
 " Remove this map by @insane
 " map <space> /
 " 进入搜索Use sane regexes"
-nnoremap / /\v
-vnoremap / /\v
+nnoremap / :set hlsearch<cr>/\v
+vnoremap / :set hlsearch<cr>/\v
 
 " quick search
 nnoremap <space> :let @/="\\\<<c-r><c-w>\\\>\\C"\|set hlsearch<CR>
@@ -71,7 +71,7 @@ map <leader>n <plug>NERDTreeTabsToggle<CR>
         endif
     endfunction
     nnoremap \ :CtrlSF -S -E "-w" "<c-r><c-w>" <c-r>=GetCtrlSFDefaultFileType()<cr><cr>
-    nnoremap <leader>ff :CtrlSF 
+    nnoremap <c-s> :CtrlSF 
     nnoremap <leader>q :CtrlSFToggle<CR>
     nnoremap <leader>\ :CtrlSF -E "-w" "<c-r><c-w>" <c-r>=getcwd()<cr> -S <c-r>=GetCtrlSFDefaultFileType()<cr>
     " let g:ctrlsf_position = 'below'
@@ -80,6 +80,10 @@ map <leader>n <plug>NERDTreeTabsToggle<CR>
     let g:ctrlsf_auto_close = 0
     let g:ctrlsf_confirm_save = 0
     let g:ctrlsf_position = 'bottom'
+    let g:ctrlsf_ackprg = "ag"
+    let g:ctrlsf_auto_focus = {
+        \ "at" : "start"
+        \}
     " let g:ctrlsf_populate_qflist = 1
     " Note: cannot use <CR> or <C-m> for open
     " Use : <sapce> or <tab>
@@ -122,6 +126,7 @@ map <leader>n <plug>NERDTreeTabsToggle<CR>
     " thank to @ListenerRi, see https://github.com/wklken/k-vim/issues/165
     let g:nerdtree_tabs_open_on_console_startup=0
     let g:nerdtree_tabs_open_on_gui_startup=0
+    let NERDTreeQuitOnOpen=0
 " }}}
 
 " ctrlspace {{{
@@ -194,3 +199,17 @@ nnoremap gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " maybe in .vimviews, will keep something
 set isk-=.
 set isk-=-
+
+let g:ycm_filetype_blacklist = {
+            \ 'tagbar' : 1,
+            \ 'gitcommit' : 1,
+            \ '__CtrlSF__' : 1,
+            \ 'ctrlsf' : 1,
+            \}
+
+let g:spf13_no_easyWindows = 1
+map <C-J> <C-W>j
+map <C-K> <C-W>k
+map <C-L> <C-W>l
+map <C-H> <C-W>h
+
