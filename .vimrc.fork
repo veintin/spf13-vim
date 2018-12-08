@@ -126,7 +126,7 @@ map <leader>n <plug>NERDTreeTabsToggle<CR>
     " thank to @ListenerRi, see https://github.com/wklken/k-vim/issues/165
     let g:nerdtree_tabs_open_on_console_startup=0
     let g:nerdtree_tabs_open_on_gui_startup=0
-    let NERDTreeQuitOnOpen=0
+    let NERDTreeQuitOnOpen=1
 " }}}
 
 " ctrlspace {{{
